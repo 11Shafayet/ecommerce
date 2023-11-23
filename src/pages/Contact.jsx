@@ -1,8 +1,10 @@
 import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import contactImage from '../assets/heroOne.png';
+import useAuth from '../hooks/useAuth';
 
 const Contact = () => {
+  const { language } = useAuth();
   const [userName, setUserName] = useState('');
   const [userPhone, setUserPhone] = useState('');
   const [userEmail, setUserEmail] = useState('');
@@ -19,7 +21,7 @@ const Contact = () => {
     let valid = true;
     let errorMessage = '';
 
-    if (!userName || !userPhone || !userEmail || !userMessage) {
+    if (!userName || !userPhone || !userMessage) {
       errorMessage = 'Please Fill Up All The required Fields!';
       valid = false;
     } else if (userPhone.length !== 11) {
@@ -39,7 +41,10 @@ const Contact = () => {
           (result) => {
             console.log(result.text);
             setSuccess(true);
-            setMessage('Your message was send Successfully!');
+
+            language === 'en'
+              ? setMessage('Your message was send Successfully!')
+              : setMessage('আপনার মেসেজটি সফলভাবে পাঠানো হয়েছে !');
           },
           (error) => {
             console.log(error.text);
@@ -55,9 +60,9 @@ const Contact = () => {
 
   return (
     <div className="my-12">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <h2 className="text-center font-bold text-3xl md:text-5xl mb-12">
-          Contact With Us
+          {language === 'en' ? 'Contact With Us' : ' যোগাযোগ করুন'}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-7 mb-6 items-center">
           <div className="col-span-1">
@@ -71,7 +76,7 @@ const Contact = () => {
           </div>
           <div className="col-span-1">
             <form
-              className="font-[poppins] black-shadow p-6 md:p-10 rounded-lg"
+              className="font-secondary black-shadow p-6 md:p-10 rounded-lg"
               ref={form}
               onSubmit={handleSubmit}
             >
@@ -80,7 +85,7 @@ const Contact = () => {
                 {/* name */}
                 <div className="flex flex-col gap-y-3 w-full md:w-1/2">
                   <label htmlFor="name" className="form-label !text-base">
-                    Name
+                    {language === 'en' ? 'Name' : ' নাম'}
                   </label>
                   <input
                     type="text"
@@ -95,7 +100,7 @@ const Contact = () => {
                 {/* phone */}
                 <div className="flex flex-col gap-y-3 w-full md:w-1/2">
                   <label htmlFor="phone" className="form-label !text-base">
-                    Phone
+                    {language === 'en' ? 'Phone' : 'ফোন'}
                   </label>
                   <input
                     type="tel"
@@ -112,7 +117,7 @@ const Contact = () => {
                 {/* email */}
                 <div className=" flex flex-col gap-y-3 w-full">
                   <label htmlFor="email" className="form-label !text-base">
-                    Email
+                    {language === 'en' ? 'Email' : 'ইমেইল'}
                   </label>
                   <input
                     type="email"
@@ -121,7 +126,6 @@ const Contact = () => {
                     className="input-with-shadow"
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}
-                    required
                   />
                 </div>
               </div>
@@ -130,7 +134,7 @@ const Contact = () => {
                 {/* message */}
                 <div className=" flex flex-col gap-y-3 w-full">
                   <label htmlFor="message" className="form-label !text-base">
-                    Message
+                    {language === 'en' ? 'Message' : 'মেসেজ'}
                   </label>
                   <textarea
                     type="message"
@@ -148,13 +152,13 @@ const Contact = () => {
                 className="bg-black text-white font-base uppercase font-bold py-3 px-12 hover:translate-y-2 duration-500 rounded w-full mt-6"
                 type="submit"
               >
-                Send Message
+                {language === 'en' ? 'Send Message' : 'বার্তা পাঠান'}
               </button>
               {message !== '' && (
                 <p
                   className={`${
                     success ? 'text-emerald-400' : 'text-red-400'
-                  } font-bold font-[poppins] mt-3`}
+                  } font-bold font-secondary mt-3`}
                 >
                   {message}
                 </p>

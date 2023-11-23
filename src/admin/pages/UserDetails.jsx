@@ -4,11 +4,11 @@ import { FaTrash } from 'react-icons/fa';
 const UserDetails = () => {
   return (
     <div className="py-12 overflow-x-auto h-[700px] md:h-auto">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <h2 className="text-center font-bold text-3xl md:text-5xl mb-12">
           User Details
         </h2>
-        <Table striped className="font-[poppins]">
+        <Table striped className="font-secondary">
           <Table.Head>
             <Table.HeadCell className="text-start">Role</Table.HeadCell>
             <Table.HeadCell className="text-start">Email</Table.HeadCell>

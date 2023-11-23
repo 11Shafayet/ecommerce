@@ -13,30 +13,42 @@ const Navbar = () => {
   const [active, setActive] = useState(pathname);
   const [open, setIsOpen] = useState(false);
 
-  const { total } = useAuth();
+  const { total, language, setLanguage } = useAuth();
+
+  const languageHandler = () => {
+    if (language === 'en') {
+      setLanguage('bn');
+    } else {
+      setLanguage('en');
+    }
+  };
 
   const navData = [
     {
       text: 'Home',
+      textBn: 'হোম',
       link: '/',
     },
     {
       text: 'Shop',
+      textBn: 'শপ',
       link: '/shop',
     },
     {
       text: 'Blog',
+      textBn: 'ব্লগ',
       link: '/blog',
     },
     {
       text: 'Contact Us',
+      textBn: 'যোগাযোগ',
       link: '/contact',
     },
   ];
 
   return (
-    <div className="bg-white shadow w-full text-4xl relative py-3 font-[poppins]">
-      <div className="container">
+    <div className="bg-white shadow w-full text-4xl relative py-3 font-secondary">
+      <div className="container mx-auto px-4">
         <div className="grid grid-cols-3">
           {/* nav */}
           {/* desktop navigation */}
@@ -49,7 +61,7 @@ const Navbar = () => {
                   className={`${active === item.link && 'font-bold'}`}
                   key={i}
                 >
-                  <li>{item.text}</li>
+                  <li>{language === 'en' ? item.text : item.textBn}</li>
                 </Link>
               ))}
             </ul>
@@ -73,6 +85,12 @@ const Navbar = () => {
               <p className="text-base font-bold">${total}</p>
               <FaShoppingBasket />
             </Link>
+            <p
+              className="text-base font-bold cursor-pointer uppercase"
+              onClick={languageHandler}
+            >
+              {language}
+            </p>
           </div>
         </div>
       </div>
@@ -121,9 +139,9 @@ export default Navbar;
 //   const { pathname } = useLocation();
 
 //   const [active, setActive] = useState(pathname);
-//   const [accountActive, setAccountActive] = useState(true);
+//   const [accountActive, setAccountActive] = useState(false);
 //   const [open, setIsOpen] = useState(false);
-//   const [userLoggedIn, setUserLoggedIn] = useState(false);
+//   const [userLoggedIn, setUserLoggedIn] = useState(true);
 
 //   const navData = [
 //     {
@@ -144,9 +162,19 @@ export default Navbar;
 //     },
 //   ];
 
+//   const subMenuIndicator = (type) => {
+//     if (type === 'user') {
+//       setIsOpen(false);
+//       setAccountActive(() => !accountActive);
+//     } else {
+//       setAccountActive(false);
+//       setIsOpen(() => !open);
+//     }
+//   };
+
 //   return (
-//     <div className="bg-white shadow w-full text-4xl relative py-3 font-[poppins]">
-//       <div className="container">
+//     <div className="bg-white shadow w-full text-4xl relative py-3 font-secondary">
+//       <div className="container mx-auto px-4">
 //         <div className="flex justify-between items-center">
 //           {/* nav */}
 //           {/* logo */}
@@ -170,10 +198,27 @@ export default Navbar;
 //               </ul>
 //             </div>
 //             {/* hamburger menu */}
-//             <div className="flex items-center lg:hidden">
-//               <div className="cursor-pointer" onClick={() => setIsOpen(true)}>
-//                 <GiHamburgerMenu />
+//             <div className="flex items-center relative lg:hidden">
+//               <div
+//                 className="cursor-pointer"
+//                 onClick={() => subMenuIndicator('hamburger')}
+//               >
+//                 {open ? <FaTimes /> : <GiHamburgerMenu />}
 //               </div>
+//               {/* mobile navigation */}
+//               {open && (
+//                 <div className="w-[150px] absolute top-[122%] right-0 text-base bg-white black-shadow p-3">
+//                   <ul className="flex flex-col gap-y-3">
+//                     {navData.map((item, i) => (
+//                       <li key={i}>
+//                         <Link to={item.link} className="hover:text-blue-500">
+//                           {item.text}
+//                         </Link>
+//                       </li>
+//                     ))}
+//                   </ul>
+//                 </div>
+//               )}
 //             </div>
 
 //             {/* cart */}
@@ -193,7 +238,7 @@ export default Navbar;
 //                     width={25}
 //                     height={25}
 //                     className="object-cover rounded-full cursor-pointer"
-//                     onClick={() => setAccountActive(!accountActive)}
+//                     onClick={() => subMenuIndicator('user')}
 //                   />
 //                   {accountActive && (
 //                     <div className="w-[150px] absolute top-[122%] right-0 text-base bg-white black-shadow p-3">
@@ -224,33 +269,6 @@ export default Navbar;
 //               ></Link>
 //             </div>
 //           </div>
-//         </div>
-//       </div>
-//       {/* mobile navigation */}
-//       <div
-//         className={`${
-//           open ? 'translate-x-0' : 'translate-x-full'
-//         } block lg:hidden transition duration-200 absolute h-screen w-screen bg-white top-0 right-0 z-50`}
-//       >
-//         <div
-//           className="absolute top-4 right-5 cursor-pointer"
-//           onClick={() => setIsOpen(false)}
-//         >
-//           <FaTimes />
-//         </div>
-//         <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-//           <ul className="flex flex-col gap-y-4 text-xl uppercase text-center">
-//             {navData.map((item, i) => (
-//               <Link
-//                 to={item.link}
-//                 onClick={() => setActive(item.link)}
-//                 className={`${active === item.link && 'font-bold'}`}
-//                 key={i}
-//               >
-//                 <li>{item.text}</li>
-//               </Link>
-//             ))}
-//           </ul>
 //         </div>
 //       </div>
 //     </div>

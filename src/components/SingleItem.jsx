@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-
-import eight from '../assets/eight.png';
+import useAuth from '../hooks/useAuth';
 
 const SingleItem = ({ product }) => {
   const { featured_image, title, rprice, sprice, _id } = product;
-  // console.log(product)
+  const { language } = useAuth();
+
   return (
     <div className="bg-white black-shadow rounded-md py-4 px-4">
       <Link to={`/single-product/${_id}`}>
@@ -16,18 +16,18 @@ const SingleItem = ({ product }) => {
           />
 
           <div>
-            <h4 className="font-bold font-[poppins] hover:text-blue-600 duration-500 overflow-hidden text-ellipsis whitespace-nowrap">
+            <h4 className="font-bold font-secondary hover:text-blue-600 duration-500 overflow-hidden text-ellipsis whitespace-nowrap">
               {title}
             </h4>
             <p className="mb-4">
               <span className="text-base font-bold text-red-500 opacity-75 line-through">
-                {rprice}
-              </span>
-              <span className="text-xl font-bold text-black"> {sprice}</span>
+                ৳{rprice}
+              </span>{' '}
+              <span className="text-xl font-bold text-black">৳{sprice}</span>
             </p>
 
             <button className="bg-black text-white font-sm uppercase font-bold py-3 px-4 hover:translate-y-2 duration-500 rounded w-full">
-              Select Options
+              {language === 'en' ? 'Select Options' : 'অপশন দেখুন'}
             </button>
           </div>
         </div>

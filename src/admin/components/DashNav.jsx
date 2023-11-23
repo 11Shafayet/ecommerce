@@ -12,8 +12,8 @@ const DashNav = () => {
   const [open, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-white shadow w-full text-4xl relative py-3 font-[poppins]">
-      <div className="container">
+    <div className="bg-white shadow w-full text-4xl relative py-3 font-secondary">
+      <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
           {/* logo */}
           <div>

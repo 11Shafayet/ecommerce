@@ -1,7 +1,23 @@
-import React from 'react';
+import {
+  BlogSection,
+  Header,
+  PopularProdcuts,
+  SubscribeSection,
+  Testimonial,
+  WhyChooseUs,
+} from '../components';
 
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <>
+      <Header />
+      <PopularProdcuts />
+      <SubscribeSection />
+      <WhyChooseUs />
+      <Testimonial />
+      <BlogSection />
+    </>
+  );
 };
 
 export default Home;

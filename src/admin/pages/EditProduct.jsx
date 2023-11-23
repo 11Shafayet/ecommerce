@@ -5,17 +5,14 @@ import axios from 'axios';
 const VITE_IMAGE_HOSTING_KEY = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${VITE_IMAGE_HOSTING_KEY}`;
 
-
-
 const EditProduct = () => {
-  const { category, desc, rprice, sprice, title, _id } =
-    useLoaderData();
-    console.log(rprice, sprice)
+  const { category, desc, rprice, sprice, title, _id } = useLoaderData();
+  console.log(rprice, sprice);
   const axiosSecure = useAxiosSecure();
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-   
+
     const formData = new FormData(e.target);
     const featuredImage = formData.get('featured_image');
     const galleryImage = formData.get('gallery_image');
@@ -49,14 +46,18 @@ const EditProduct = () => {
           },
         }
       );
-     
+
       const title = formData.get('title');
       const category = formData.get('category');
       const rprice = parseFloat(formData.get('rprice'));
       const sprice = parseFloat(formData.get('sprice'));
       const desc = formData.get('desc');
-      const sizeCheckboxes = Array.from(e.target.querySelectorAll('input[name^="size"]:checked')).map((checkbox) => checkbox.value);
-    const colorCheckboxes = Array.from(e.target.querySelectorAll('input[name^="color"]:checked')).map((checkbox) => checkbox.value);
+      const sizeCheckboxes = Array.from(
+        e.target.querySelectorAll('input[name^="size"]:checked')
+      ).map((checkbox) => checkbox.value);
+      const colorCheckboxes = Array.from(
+        e.target.querySelectorAll('input[name^="color"]:checked')
+      ).map((checkbox) => checkbox.value);
 
       const updatedProductData = {
         title,
@@ -67,21 +68,26 @@ const EditProduct = () => {
         featured_image: featuredImageRes.data.data.display_url,
         gallery_image: galleryImageRes.data.data.display_url,
         size: sizeCheckboxes,
-      color: colorCheckboxes,
+        color: colorCheckboxes,
       };
       console.log(updatedProductData);
       // Send product data to your server
-      const updateItem = await axiosSecure
-        .patch(`/api/v1/allproducts/${_id}`, updatedProductData)
-        {
-          if(updateItem.data.modifiedCount > 0){
-            swal("Congratulation!", "Your product updated successfully!", "success");
-          }
+      const updateItem = await axiosSecure.patch(
+        `/api/v1/allproducts/${_id}`,
+        updatedProductData
+      );
+      {
+        if (updateItem.data.modifiedCount > 0) {
+          swal(
+            'Congratulation!',
+            'Your product updated successfully!',
+            'success'
+          );
         }
+      }
     } catch (error) {
       console.error('Error uploading image:', error);
     }
-
 
     // {
     //   if (updateItem.data.modifiedCount > 0) {
@@ -96,7 +102,7 @@ const EditProduct = () => {
 
   return (
     <div className="py-12">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <h2 className="text-center font-bold text-xl md:text-5xl mb-12">
           Edit Product
         </h2>

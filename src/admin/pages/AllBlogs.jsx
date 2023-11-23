@@ -49,7 +49,7 @@ const AllBlog = () => {
 
   return (
     <div className="my-12 overflow-x-auto h-[700px] md:h-auto">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <h2 className="text-center font-bold text-3xl md:text-5xl mb-12">
           All Blogs
         </h2>
@@ -79,8 +79,7 @@ const AllBlog = () => {
                     />
                   </Table.Cell>
                   <Table.Cell className="whitespace-nowrap font-bold text-gray-900 dark:text-white">
-                    {blog.blogTitle
-}
+                    {blog.blogTitle}
                   </Table.Cell>
                   <Table.Cell>
                     <Link

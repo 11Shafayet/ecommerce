@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate, useLoaderData } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 const SingleProduct = () => {
   const product = useLoaderData();
+  const { language } = useAuth();
   const {
     featured_image,
     gallery_image,
@@ -33,7 +35,7 @@ const SingleProduct = () => {
 
   return (
     <div className="my-12">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <div className="grid gap-4 md:gap-10 md:grid-cols-2">
           {/* images */}
           <div>
@@ -78,7 +80,7 @@ const SingleProduct = () => {
                 {/* Size */}
                 <div className="flex flex-col gap-y-2 w-full">
                   <label htmlFor="size" className="form-label">
-                    Size
+                    {language === 'en' ? 'Size' : 'সাইজ'}
                   </label>
                   <select
                     name="size"
@@ -88,7 +90,7 @@ const SingleProduct = () => {
                     className="rounded input-with-shadow text-lg font-bold !focus:outline-0"
                   >
                     <option value="" hidden defaultChecked>
-                      Select Size
+                      {language === 'en' ? 'Select Size' : 'সাইজ দিন'}
                     </option>
                     {size?.map((sizeOption, index) => (
                       <option
@@ -104,7 +106,7 @@ const SingleProduct = () => {
                 {/* Color */}
                 <div className=" flex flex-col gap-y-3 w-full">
                   <label htmlFor="color" className="form-label">
-                    Color
+                    {language === 'en' ? 'Color' : 'কালার'}
                   </label>
                   <select
                     name="color"
@@ -114,7 +116,7 @@ const SingleProduct = () => {
                     className="rounded input-with-shadow text-lg font-bold !focus:outline-0"
                   >
                     <option value="" hidden defaultChecked>
-                      Select Color
+                      {language === 'en' ? 'Select Color' : 'কালার দিন'}
                     </option>
                     {color?.map((colorOption, index) => (
                       <option
@@ -130,7 +132,7 @@ const SingleProduct = () => {
                 {/* Quantity */}
                 <div className=" flex flex-col gap-y-3 w-full">
                   <label htmlFor="quantity" className="form-label">
-                    Quantity
+                    {language === 'en' ? 'Quantity' : 'পরিমাণ'}
                   </label>
                   <input
                     type="number"
@@ -149,7 +151,7 @@ const SingleProduct = () => {
                   className="bg-black text-white font-base uppercase font-bold py-3 px-12 hover:translate-y-2 duration-500 rounded mt-6 w-full"
                   type="submit"
                 >
-                  Add To Cart
+                  {language === 'en' ? ' Add To Cart' : 'কার্টে যোগ করুন'}
                 </button>
               </div>
             </form>
@@ -159,9 +161,9 @@ const SingleProduct = () => {
         {/* description */}
         <div className="mt-6">
           <h2 className="font-bold text-2xl md:text-3xl mb-4">
-            Product Details
+            {language === 'en' ? 'Product Details' : 'প্রডাক্টের বিবরণী'}
           </h2>
-          <p className="font-[poppins] leading-loose max-w-4xl text-justify">
+          <p className="font-secondary leading-loose max-w-4xl text-justify">
             {desc}
           </p>
         </div>

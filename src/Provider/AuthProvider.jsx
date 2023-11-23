@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 
 export const AuthContext = createContext();
 
@@ -6,7 +6,7 @@ const AuthProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
-  console.log(cartItems);
+  const [language, setLanguage] = useState('en');
 
   const authInfo = {
     cartItems,
@@ -15,6 +15,8 @@ const AuthProvider = ({ children }) => {
     setTotal,
     loading,
     setLoading,
+    language,
+    setLanguage,
   };
 
   return (

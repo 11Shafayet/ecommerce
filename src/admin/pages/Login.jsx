@@ -17,10 +17,10 @@ const Login = () => {
 
   return (
     <div className="my-12">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <div className="min-h-[80vh] flex justify-center items-center">
           <form
-            className="font-[poppins] black-shadow p-6 md:p-10 rounded-lg max-w-[500px] w-full mx-auto"
+            className="font-secondary black-shadow p-6 md:p-10 rounded-lg max-w-[500px] w-full mx-auto"
             onSubmit={handleSubmit}
           >
             <h2 className="text-center font-bold text-3xl mb-12">Login</h2>
@@ -75,7 +75,7 @@ const Login = () => {
               <p
                 className={`${
                   success ? 'text-emerald-400' : 'text-red-400'
-                } font-bold font-[poppins] mt-3`}
+                } font-bold font-secondary mt-3`}
               >
                 {message}
               </p>

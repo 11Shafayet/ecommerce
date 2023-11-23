@@ -3,40 +3,42 @@ import Pagination from '../components/Pagination';
 import SingleItem from '../components/SingleItem';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import useAuth from '../hooks/useAuth';
+import Loader from '../components/Loader';
 
 const Shop = () => {
   const axiosPublic = useAxiosPublic();
+  const { language } = useAuth();
 
   const { isLoading, data } = useQuery({
     queryKey: ['product'],
-    queryFn: () => axiosPublic.get(`/api/v1/allproducts`)
-    .then(res => {
-      return res.data;
-      
-    })
-    .catch(error => {
-      console.log('axios get error', error);
-      throw error;
-    })
-  })
+    queryFn: () =>
+      axiosPublic
+        .get(`/api/v1/allproducts`)
+        .then((res) => {
+          return res.data;
+        })
+        .catch((error) => {
+          console.log('axios get error', error);
+          throw error;
+        }),
+  });
   return (
     <div className="my-12">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <h2 className="text-center font-bold text-3xl md:text-5xl mb-12">
-          Our Shop
+          {language === 'en' ? 'Our Shop' : ' আমাদের শপ'}
         </h2>
-        <div className="grid gap-4 md:gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {
-          isLoading ? (<p>Your data is loading. Please wait</p>) : (
-            data.map(product => (
-              <SingleItem key={product._id} product={product}></SingleItem>
-            ))
-          )
-        }
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className="grid gap-4 md:gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {data.map((product) => (
+              <SingleItem key={product._id} product={product} />
+            ))}
+          </div>
+        )}
 
-        </div>
-
-        <Pagination />
+        {/* <Pagination /> */}
       </div>
     </div>
   );

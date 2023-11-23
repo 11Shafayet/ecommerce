@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import useAuth from '../hooks/useAuth';
 import swal from 'sweetalert';
 
 const Checkout = () => {
@@ -23,6 +24,7 @@ const Checkout = () => {
   const [total, setTotal] = useState(0);
   const [shippingCost, setShippingCost] = useState(100);
   const axiosSecure = useAxiosSecure();
+  const { language } = useAuth();
 
   useEffect(() => {
     const storedProducts = JSON.parse(localStorage.getItem('cart')) || [];
@@ -69,8 +71,6 @@ const Checkout = () => {
 
     if (valid) {
       setSuccess(true);
-      // setMessage('Order Placed Successfully!');
-      // use backend code here
 
       const checkOutData = {
         name: userName,
@@ -108,23 +108,25 @@ const Checkout = () => {
 
   return (
     <div className="my-12">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <h2 className="text-center font-bold text-3xl md:text-5xl mb-12">
-          Checkout
+          {language === 'en' ? 'Checkout' : 'চেকআউট'}
         </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
           <div>
             {/* billing details */}
             <div className="black-shadow rounded-lg py-12 px-4 sm:px-6">
-              <h3 className="font-bold text-3xl mb-6">Billing Details</h3>
-              <form className="font-[poppins]">
+              <h3 className="font-bold text-3xl mb-6">
+                {language === 'en' ? 'Billing Details' : 'আপনার তথ্য'}
+              </h3>
+              <form className="font-secondary">
                 {/* input group */}
                 <div className="flex flex-col md:flex-row gap-4 justify-between">
                   {/* name */}
                   <div className="flex flex-col gap-y-3 w-full md:w-1/2">
                     <label htmlFor="name" className="form-label !text-base">
-                      Name
+                      {language === 'en' ? 'Name' : ' নাম'}
                     </label>
                     <input
                       type="text"
@@ -139,7 +141,7 @@ const Checkout = () => {
                   {/* phone */}
                   <div className="flex flex-col gap-y-3 w-full md:w-1/2">
                     <label htmlFor="phone" className="form-label !text-base">
-                      Phone
+                      {language === 'en' ? 'Phone' : 'ফোন'}
                     </label>
                     <input
                       type="tel"
@@ -156,7 +158,7 @@ const Checkout = () => {
                   {/* email */}
                   <div className=" flex flex-col gap-y-3 w-full md:w-1/2">
                     <label htmlFor="email" className="form-label !text-base">
-                      Email
+                      {language === 'en' ? 'Email' : 'ইমেইল'}
                     </label>
                     <input
                       type="email"
@@ -171,7 +173,7 @@ const Checkout = () => {
                   {/* Division*/}
                   <div className=" flex flex-col gap-y-3 w-full md:w-1/2">
                     <label htmlFor="division" className="form-label !text-base">
-                      Division
+                      {language === 'en' ? 'Division' : 'বিভাগ'}
                     </label>
                     <select
                       name="division"
@@ -181,7 +183,7 @@ const Checkout = () => {
                       onChange={(e) => setUserDivision(e.target.value)}
                     >
                       <option value="" hidden>
-                        Your Division
+                        {language === 'en' ? 'Your Division' : 'আপনার বিভাগ'}
                       </option>
                       <option value="Dhaka">Dhaka</option>
                       <option value="Chattogram">Chattogram</option>
@@ -199,7 +201,7 @@ const Checkout = () => {
                   {/* address */}
                   <div className=" flex flex-col gap-y-3 w-full">
                     <label htmlFor="address" className="form-label !text-base">
-                      Address
+                      {language === 'en' ? 'Address' : 'ঠিকানা'}
                     </label>
                     <textarea
                       type="address"
@@ -220,11 +222,14 @@ const Checkout = () => {
           <div className="flex flex-col gap-y-6">
             {/* order details */}
             <div className="black-shadow rounded-lg py-12 px-4 sm:px-6">
-              <h3 className="font-bold text-3xl mb-6">Order Details</h3>
-              <div className="font-[poppins]">
+              <h3 className="font-bold text-3xl mb-6">
+                {' '}
+                {language === 'en' ? 'Order Details' : 'পণ্য বিবরণী'}
+              </h3>
+              <div className="font-secondary">
                 <div className="flex items-center justify-between gap-3 text-base font-bold border-b pb-6 ">
-                  <h5>Product</h5>
-                  <h5>Pricing</h5>
+                  <h5>{language === 'en' ? 'Product' : 'প্রোডাক্ট'}</h5>
+                  <h5>{language === 'en' ? 'Pricing' : 'মূল্য'}</h5>
                 </div>
                 {/* single item */}
                 {LSItems.map((item) => (
@@ -235,11 +240,13 @@ const Checkout = () => {
                     <h5>
                       <span>{item.title}</span> x <span>{item.quantity}</span> -{' '}
                       <span className="capitalize">
-                        Color: {item.choosenColor}
+                        {language === 'en' ? 'Color:' : 'কালারঃ'}
+                        {item.choosenColor}
                       </span>
                       ,{' '}
                       <span className="capitalize">
-                        Size: {item.choosenSize}
+                        {language === 'en' ? 'Size:' : 'সাইজঃ'}
+                        {item.choosenSize}
                       </span>
                     </h5>
                     <h5 className="whitespace-nowrap">
@@ -249,7 +256,7 @@ const Checkout = () => {
                 ))}
                 {/* shipping */}
                 <div className="flex items-center justify-between gap-x-5 border-b py-6">
-                  <h5>Shipping</h5>
+                  <h5>{language === 'en' ? 'Shipping:' : 'শিপিং'}</h5>
                   <h5 className="whitespace-nowrap">
                     ৳ {userDivision === 'Dhaka' ? 50 : 100}
                   </h5>
@@ -265,9 +272,11 @@ const Checkout = () => {
             </div>
             {/* payment */}
             <div className="black-shadow rounded-lg py-12 px-4 sm:px-6">
-              <h3 className="font-bold text-3xl mb-6">Payment</h3>
+              <h3 className="font-bold text-3xl mb-6">
+                {language === 'en' ? 'Payment:' : 'পেমেন্ট'}
+              </h3>
               <form action="">
-                <ul className="font-[poppins] flex flex-col gap-y-2 ">
+                <ul className="font-secondary flex flex-col gap-y-2 ">
                   <li className="relative">
                     <input
                       type="radio"
@@ -379,13 +388,13 @@ const Checkout = () => {
                 type="submit"
                 onClick={handleSubmit}
               >
-                Place Order
+                {language === 'en' ? 'Place Order' : 'অর্ডার করুন'}
               </button>
               {message !== '' && (
                 <p
                   className={`${
                     success ? 'text-emerald-400' : 'text-red-400'
-                  } font-bold font-[poppins] mt-3`}
+                  } font-bold font-secondary mt-3`}
                 >
                   {message}
                 </p>

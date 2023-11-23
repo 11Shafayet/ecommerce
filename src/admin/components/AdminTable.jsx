@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import swal from 'sweetalert';
 import { GridLoader } from 'react-spinners';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Loader from '../../components/Loader';
 
 const AdminTable = () => {
   const axiosSecure = useAxiosSecure();
@@ -50,14 +51,12 @@ const AdminTable = () => {
 
   return (
     <div className="my-12 overflow-x-auto h-[700px] md:h-auto">
-      <div className="container">
+      <div className="container px-4 mx-auto">
         <h2 className="text-center font-bold text-3xl md:text-5xl mb-12">
           Manage Products
         </h2>
         {isLoading ? (
-          <div className="flex justify-center items-center text-center w-full my-20">
-            <GridLoader color="#36d7b7" size={50} />
-          </div>
+          <Loader />
         ) : (
           <Table striped>
             <Table.Head>

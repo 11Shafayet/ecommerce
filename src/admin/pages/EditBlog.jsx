@@ -6,9 +6,9 @@ const VITE_IMAGE_HOSTING_KEY = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${VITE_IMAGE_HOSTING_KEY}`;
 
 const EditBlog = () => {
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   const blogDetails = useLoaderData();
-  console.log(blogDetails)
+  console.log(blogDetails);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -31,7 +31,6 @@ const EditBlog = () => {
       );
       // console.log('Featured Image URL:', featuredImageRes.data);
 
-
       const blogTitle = formData.get('title');
       const blog = formData.get('desc');
 
@@ -42,20 +41,22 @@ const EditBlog = () => {
       };
       console.log(updatedBlogData);
       // Send blog data to your server
-      const updateBlog = await axiosSecure
-        .patch(`/api/v1/allblogs/${blogDetails._id}`, updatedBlogData)
-       {
-        if(updateBlog.data.modifiedCount > 0) {
-          swal("Congratulation!", "Your blog updated successfully!", "success");
+      const updateBlog = await axiosSecure.patch(
+        `/api/v1/allblogs/${blogDetails._id}`,
+        updatedBlogData
+      );
+      {
+        if (updateBlog.data.modifiedCount > 0) {
+          swal('Congratulation!', 'Your blog updated successfully!', 'success');
         }
-       }
+      }
     } catch (error) {
       console.error('Error uploading image:', error);
     }
   };
   return (
     <div className="py-12">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <h2 className="text-center font-bold text-xl md:text-5xl mb-12">
           Edit Blog
         </h2>

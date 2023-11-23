@@ -94,7 +94,7 @@ const AddProduct = () => {
   };
   return (
     <div className="py-12">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <h2 className="text-center font-bold text-xl md:text-5xl mb-12">
           Add New Product
         </h2>

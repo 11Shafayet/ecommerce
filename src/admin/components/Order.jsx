@@ -6,7 +6,7 @@ import { GridLoader } from 'react-spinners';
 const Order = ({ isLoading, data, title }) => {
   return (
     <div className="py-12 overflow-x-auto h-[700px] md:h-auto">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <h2 className="text-center font-bold text-3xl md:text-5xl mb-12">
           {title}
         </h2>

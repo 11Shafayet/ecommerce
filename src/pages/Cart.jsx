@@ -8,7 +8,7 @@ const Cart = () => {
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
-  const { setTotal } = useAuth();
+  const { setTotal, language } = useAuth();
 
   useEffect(() => {
     const storedProducts = JSON.parse(localStorage.getItem('cart')) || [];
@@ -38,9 +38,9 @@ const Cart = () => {
 
   return (
     <div className="my-12">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <h2 className="text-center font-bold text-3xl md:text-5xl mb-12">
-          Your Cart
+          {language === 'en' ? 'Your Cart' : 'আপনার কার্ট'}
         </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-8">
@@ -96,8 +96,9 @@ const Cart = () => {
                 </Table>
               ) : (
                 <p>
-                  Your Cart is currently empty! Please select some products
-                  first
+                  {language === 'en'
+                    ? ' Your Cart is currently empty! Please select some product first'
+                    : 'আপনার কার্টটি খালি ।'}
                 </p>
               )}
               <div>
@@ -106,7 +107,7 @@ const Cart = () => {
                     className="bg-black text-white font-base uppercase font-bold py-3 px-12 hover:translate-y-2 duration-500 rounded mt-6 "
                     type="submit"
                   >
-                    Return To Shop
+                    {language === 'en' ? 'Return To Shop' : 'শপ পেজ এ যান'}
                   </button>
                 </Link>
               </div>
@@ -126,7 +127,7 @@ const Cart = () => {
                   disabled={products.length <= 0}
                   onClick={() => navigate('/checkout')}
                 >
-                  Proceed To Checkout
+                  {language === 'en' ? 'Proceed To Checkout' : 'চেকআউট করুন'}
                 </button>
               </div>
             </div>
