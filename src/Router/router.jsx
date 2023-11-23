@@ -46,7 +46,7 @@ const router = createBrowserRouter([
         path: '/single-product/:id',
         element: <SingleProduct />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/v1/allproducts/${params.id}`),
+          fetch(`http://localhost:5000/api/v1/allproducts/${params.id}`),
       },
       {
         path: '/checkout',
@@ -63,6 +63,8 @@ const router = createBrowserRouter([
       {
         path: '/blog/:id',
         element: <SingleBlog />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/v1/allblogs/${params.id}`),
       },
       {
         path: '/contact',
@@ -99,7 +101,7 @@ const router = createBrowserRouter([
         path: '/dashboard/edit-product/:id',
         element: <EditProduct />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/v1/allproducts/${params.id}`),
+          fetch(`http://localhost:5000/api/v1/allproducts/${params.id}`),
       },
       {
         path: '/dashboard/user-details',
@@ -126,6 +128,8 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/edit-order/:id',
         element: <EditOrder />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/v1/allorders/${params.id}`),
       },
 
       //blog routes
@@ -140,6 +144,8 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/edit-blog/:id',
         element: <EditBlog />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/v1/allblogs/${params.id}`),
       },
     ],
   },

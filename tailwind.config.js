@@ -8,5 +8,11 @@ export default {
   theme: {
     extend: {},
   },
+  variants: {
+    extend: {
+      backgroundColor: ['hover', 'focus'],
+      textColor: ['hover', 'focus'],
+    },
+  },
   plugins: [require('flowbite/plugin')],
 };

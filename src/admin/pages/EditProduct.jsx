@@ -1,42 +1,97 @@
 import { useLoaderData } from 'react-router-dom';
-import useAxios from '../../hooks/useAxios';
 import swal from 'sweetalert';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import axios from 'axios';
+const VITE_IMAGE_HOSTING_KEY = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${VITE_IMAGE_HOSTING_KEY}`;
+
+
 
 const EditProduct = () => {
-  const { category, desc, regular_price, sale_price, title, _id } =
+  const { category, desc, rprice, sprice, title, _id } =
     useLoaderData();
-  const axiosSecure = useAxios();
+    console.log(rprice, sprice)
+  const axiosSecure = useAxiosSecure();
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+   
     const formData = new FormData(e.target);
-    const title = formData.get('title');
-    const category = formData.get('category');
-    const regular_price = parseFloat(formData.get('regular_price'));
-    const sale_price = parseFloat(formData.get('sale_price'));
-    const desc = formData.get('desc');
-    const updatedProductData = {
-      title,
-      category,
-      regular_price,
-      sale_price,
-      desc,
-    };
-    console.log(updatedProductData);
+    const featuredImage = formData.get('featured_image');
+    const galleryImage = formData.get('gallery_image');
 
-    const updateItem = await axiosSecure.patch(
-      `/v1/allproducts/${_id}`,
-      updatedProductData
-    );
-    {
-      if (updateItem.data.modifiedCount > 0) {
-        swal(
-          'Congratulation!',
-          'Your product updated successfully!',
-          'success'
-        );
-      }
+    try {
+      // Upload featured image
+      const featuredImageFormData = new FormData();
+      featuredImageFormData.append('image', featuredImage);
+
+      const featuredImageRes = await axios.post(
+        image_hosting_api,
+        featuredImageFormData,
+        {
+          headers: {
+            'content-type': 'multipart/form-data',
+          },
+        }
+      );
+      // console.log('Featured Image URL:', featuredImageRes.data);
+
+      // Upload gallery image
+      const galleryImageFormData = new FormData();
+      galleryImageFormData.append('image', galleryImage);
+
+      const galleryImageRes = await axios.post(
+        image_hosting_api,
+        galleryImageFormData,
+        {
+          headers: {
+            'content-type': 'multipart/form-data',
+          },
+        }
+      );
+     
+      const title = formData.get('title');
+      const category = formData.get('category');
+      const rprice = parseFloat(formData.get('rprice'));
+      const sprice = parseFloat(formData.get('sprice'));
+      const desc = formData.get('desc');
+      const sizeCheckboxes = Array.from(e.target.querySelectorAll('input[name^="size"]:checked')).map((checkbox) => checkbox.value);
+    const colorCheckboxes = Array.from(e.target.querySelectorAll('input[name^="color"]:checked')).map((checkbox) => checkbox.value);
+
+      const updatedProductData = {
+        title,
+        category,
+        rprice: rprice,
+        sprice: sprice,
+        desc,
+        featured_image: featuredImageRes.data.data.display_url,
+        gallery_image: galleryImageRes.data.data.display_url,
+        size: sizeCheckboxes,
+      color: colorCheckboxes,
+      };
+      console.log(updatedProductData);
+      // Send product data to your server
+      const updateItem = await axiosSecure
+        .patch(`/api/v1/allproducts/${_id}`, updatedProductData)
+        {
+          if(updateItem.data.modifiedCount > 0){
+            swal("Congratulation!", "Your product updated successfully!", "success");
+          }
+        }
+    } catch (error) {
+      console.error('Error uploading image:', error);
     }
+
+
+    // {
+    //   if (updateItem.data.modifiedCount > 0) {
+    //     swal(
+    //       'Congratulation!',
+    //       'Your product updated successfully!',
+    //       'success'
+    //     );
+    //   }
+    // }
   };
 
   return (
@@ -61,6 +116,7 @@ const EditProduct = () => {
                 placeholder="Your Product Title"
                 name="title"
                 className="input-with-shadow"
+                defaultValue={title}
                 required
               />
             </div>
@@ -74,6 +130,7 @@ const EditProduct = () => {
                 placeholder="Your Product Category"
                 className="input-with-shadow"
                 name="category"
+                defaultValue={category}
               />
             </div>
           </div>
@@ -89,6 +146,7 @@ const EditProduct = () => {
                 placeholder=" Regular Price"
                 name="rprice"
                 className="input-with-shadow"
+                defaultValue={rprice}
                 required
               />
             </div>
@@ -102,6 +160,7 @@ const EditProduct = () => {
                 placeholder=" Sale Price"
                 name="sprice"
                 className="input-with-shadow"
+                defaultValue={sprice}
                 required
               />
             </div>
@@ -236,6 +295,7 @@ const EditProduct = () => {
               name="desc"
               className="input-with-shadow"
               rows="4"
+              defaultValue={desc}
               required
             />
           </div>

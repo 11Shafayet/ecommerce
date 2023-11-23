@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useQuery } from '@tanstack/react-query';
 import swal from 'sweetalert';
-import useAxios from '../../hooks/useAxios';
 import { GridLoader } from 'react-spinners';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const AdminTable = () => {
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure();
   const { isLoading, data, refetch } = useQuery({
     queryKey: ['product'],
     queryFn: () =>
       axiosSecure
-        .get('/v1/allproducts')
+        .get('/api/v1/allproducts')
         .then((res) => {
           return res.data;
         })
@@ -21,6 +21,7 @@ const AdminTable = () => {
           throw error;
         }),
   });
+  console.log(data);
 
   const handleDelete = (id) => {
     swal({
@@ -31,7 +32,7 @@ const AdminTable = () => {
       dangerMode: true,
     }).then(async (willDelete) => {
       if (willDelete) {
-        const res = await axiosSecure.delete(`/v1/allproducts/${id}`);
+        const res = await axiosSecure.delete(`/api/v1/allproduct/${id}`);
         // console.log(res.data);
         if (res.data.deletedCount > 0) {
           // refetch to update the ui
@@ -81,12 +82,12 @@ const AdminTable = () => {
                       className="w-[80px] h-[80px] object-cover"
                     />
                   </Table.Cell>
-                  <Table.Cell className="whitespace-nowrap font-bold text-gray-900 dark:text-white">
+                  <Table.Cell className="whitespace-wrap font-bold text-gray-900 dark:text-white min-w-[200px]">
                     {product.title}
                   </Table.Cell>
                   <Table.Cell>{product.category}</Table.Cell>
-                  <Table.Cell>${product.regular_price}</Table.Cell>
-                  <Table.Cell>${product.sale_price}</Table.Cell>
+                  <Table.Cell>${product.rprice}</Table.Cell>
+                  <Table.Cell>${product.sprice}</Table.Cell>
                   <Table.Cell>
                     <Link
                       to={`/dashboard/edit-product/${product._id}`}

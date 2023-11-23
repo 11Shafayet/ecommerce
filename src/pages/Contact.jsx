@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
-import contactImage from '../assets/hero-banner.png';
+import contactImage from '../assets/heroOne.png';
 
 const Contact = () => {
   const [userName, setUserName] = useState('');

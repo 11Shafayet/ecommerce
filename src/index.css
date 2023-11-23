@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -23,8 +23,30 @@ body {
   --aw_primary_color: #fff;
   --aw_secondary_color: #000;
   --aw_theme_color: #f5c000;
-  --aw_primary_font: 'Cinzel', serif;
-  --aw_secondary_font: 'Lora', serif;
+  --aw_primary_font: 'Playfair Display', serif;
+  --aw_secondary_font: 'Poppins', serif;
+}
+
+.theme-color {
+  color: var(--aw_theme_color) !important;
+}
+.accent-color {
+  color: var(--aw_accent_color) !important;
+}
+.font-primary {
+  font-family: var(--aw_primary_font) !important;
+}
+.font-secondary {
+  font-family: var(--aw_secondary_font) !important;
+}
+.bg-primary-color {
+  background-color: var(--aw_primary_color) !important;
+}
+.bg-secondary-color {
+  background-color: var(--aw_secondary_color) !important;
+}
+.bg-theme-color {
+  background-color: var(--aw_theme_color) !important;
 }
 
 .container {

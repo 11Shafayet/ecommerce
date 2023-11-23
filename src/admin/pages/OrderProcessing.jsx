@@ -1,14 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import useAxios from '../../hooks/useAxios';
 import Order from '../components/Order';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const OrderProcessing = () => {
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure();
   const { isLoading, data } = useQuery({
     queryKey: ['product'],
     queryFn: () =>
       axiosSecure
-        .get('/v1/allproducts')
+        .get('/api/v1/allorders')
         .then((res) => {
           return res.data;
         })
@@ -18,7 +18,10 @@ const OrderProcessing = () => {
         }),
   });
 
-  return <Order isLoading={isLoading} data={data} title="Processing Orders" />;
+  const onProcessingOrders = data?.filter(onProcessingOrder => onProcessingOrder.status === "processing")
+  console.log(onProcessingOrders)
+
+  return <Order isLoading={isLoading} data={onProcessingOrders} title="Processing Orders" />;
 };
 
 export default OrderProcessing;

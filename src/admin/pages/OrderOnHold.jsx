@@ -1,24 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
-import useAxios from '../../hooks/useAxios';
 import Order from '../components/Order';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const OrderOnHold = () => {
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure();
   const { isLoading, data } = useQuery({
     queryKey: ['product'],
     queryFn: () =>
-      axiosSecure
-        .get('/v1/allproducts')
-        .then((res) => {
-          return res.data;
-        })
-        .catch((error) => {
-          console.log('axios get error', error);
-          throw error;
-        }),
+    axiosSecure
+    .get('/api/v1/allorders')
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.log('axios get error', error);
+      throw error;
+    }),
   });
-
-  return <Order isLoading={isLoading} data={data} title="On Hold Orders" />;
+  const onHoldOrders = data?.filter(onHoldOrder => onHoldOrder.status === "On Hold Orders")
+  console.log(onHoldOrders)
+  return <Order isLoading={isLoading} data={onHoldOrders} title="On Hold Orders" />;
 };
+
 
 export default OrderOnHold;

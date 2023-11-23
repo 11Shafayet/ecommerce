@@ -1,18 +1,21 @@
-import useAxios from '../../hooks/useAxios';
 import swal from 'sweetalert';
 import axios from 'axios';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAuth from '../../hooks/useAuth';
 const VITE_IMAGE_HOSTING_KEY = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${VITE_IMAGE_HOSTING_KEY}`;
 
 const AddBlog = () => {
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure();
+  const { loading, setLoading } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     const formData = new FormData(e.target);
     const featuredImage = formData.get('featured_image');
-    const galleryImage = formData.get('gallery_image');
 
     try {
       // Upload featured image
@@ -28,58 +31,36 @@ const AddBlog = () => {
           },
         }
       );
-      // console.log('Featured Image URL:', featuredImageRes.data);
 
-      // Upload gallery image
-      const galleryImageFormData = new FormData();
-      galleryImageFormData.append('image', galleryImage);
+      const blogTitle = formData.get('title');
+      const blog = formData.get('desc');
 
-      const galleryImageRes = await axios.post(
-        image_hosting_api,
-        galleryImageFormData,
-        {
-          headers: {
-            'content-type': 'multipart/form-data',
-          },
-        }
-      );
-      // console.log('Gallery Image URL:', galleryImageRes.data);
-
-      // Now you can use the image URLs or other data as needed
-
-      // Rest of your code to handle other form fields and send the product data to your server
-      const title = formData.get('title');
-      const category = formData.get('category');
-      const regular_price = parseFloat(formData.get('regular_price'));
-      const sale_price = parseFloat(formData.get('sale_price'));
-      const desc = formData.get('desc');
-
-      const productData = {
-        title,
-        category,
-        regular_price,
-        sale_price,
-        desc,
+      const blogData = {
+        blogTitle,
+        blog,
         featured_image: featuredImageRes.data.data.display_url,
-        gallery_image: galleryImageRes.data.data.display_url,
       };
-      console.log(productData);
+      console.log(blogData);
       // Send product data to your server
       axiosSecure
-        .post('/v1/addproduct', productData)
+        .post('/api/v1/addblog', blogData)
         .then((response) => {
           if (response.data.insertedId) {
+            setLoading(false);
+
             swal(
               'Congratulation!',
-              'You successfully added a product!',
+              'You successfully added a blog post!',
               'success'
             );
           }
         })
         .catch((error) => {
+          setLoading(false);
           console.log('axios post error', error);
         });
     } catch (error) {
+      setLoading(false);
       console.error('Error uploading image:', error);
     }
   };
@@ -139,8 +120,11 @@ const AddBlog = () => {
 
           <div className="mt-12">
             <button
-              className="bg-black text-white font-base uppercase font-bold py-3 px-12 hover:translate-y-2 duration-500 rounded w-full"
+              className={`bg-black text-white font-base uppercase font-bold py-3 px-12 hover:translate-y-2 duration-500 rounded cursor-pointer ${
+                loading && 'cursor-not-allowed'
+              }`}
               type="submit"
+              disabled={loading}
             >
               Add New Blog
             </button>

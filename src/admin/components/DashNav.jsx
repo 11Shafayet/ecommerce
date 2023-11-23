@@ -11,8 +11,6 @@ const DashNav = () => {
   const [active, setActive] = useState(pathname.replace('/dashboard/', ''));
   const [open, setIsOpen] = useState(false);
 
-  console.log(active);
-
   return (
     <div className="bg-white shadow w-full text-4xl relative py-3 font-[poppins]">
       <div className="container">

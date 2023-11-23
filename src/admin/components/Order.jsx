@@ -1,9 +1,9 @@
 import { Table } from 'flowbite-react';
 import { Link } from 'react-router-dom';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa';
 import { GridLoader } from 'react-spinners';
 
-const Order = ({ isLoading = 'false', data = [], title = 'Orders' }) => {
+const Order = ({ isLoading, data, title }) => {
   return (
     <div className="py-12 overflow-x-auto h-[700px] md:h-auto">
       <div className="container">
@@ -19,45 +19,43 @@ const Order = ({ isLoading = 'false', data = [], title = 'Orders' }) => {
             <Table.Head>
               <Table.HeadCell className="text-start">Status</Table.HeadCell>
               <Table.HeadCell className="text-start">Title</Table.HeadCell>
-              <Table.HeadCell className="text-start">Quantity</Table.HeadCell>
               <Table.HeadCell className="text-start">
                 Total Price
               </Table.HeadCell>
-              <Table.HeadCell className="text-start">Edit</Table.HeadCell>
-              <Table.HeadCell className="text-start">Delete</Table.HeadCell>
+              <Table.HeadCell className="text-start">
+                View Details
+              </Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
-              {data.map((product) => (
+              {data.map((order) => (
                 <Table.Row
                   className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                  key={product._id}
+                  key={order._id}
                 >
                   <Table.Cell>
                     <h4
                       className={`py-2 px-3 text-center inline-block rounded-full font-bold text-base text-white bg-blue-500 ${
-                        status === 'onHold' && 'bg-red-500'
-                      } ${status === 'processing' && 'bg-blue-500'} ${
-                        status === 'completed' && 'bg-green-500'
+                        order.status === 'On Hold Orders' && 'bg-red-500'
+                      } ${order.status === 'processing' && 'bg-blue-500'} ${
+                        order.status === 'Completed' && 'bg-green-500'
                       }`}
                     >
-                      Processing
+                      {order.status === 'On Hold Orders' && 'On Hold'}
+                      {order.status === 'processing' && 'Processing'}
+                      {order.status === 'Completed' && 'Completed'}
                     </h4>
                   </Table.Cell>
                   <Table.Cell className="whitespace-nowrap font-bold text-gray-900 dark:text-white">
-                    Cotton Panjabi *2, Silk Panjabi*3
+                    {order.name}
                   </Table.Cell>
-                  <Table.Cell>5</Table.Cell>
-                  <Table.Cell>$499</Table.Cell>
+                  <Table.Cell>${order.totalPrice}</Table.Cell>
                   <Table.Cell>
                     <Link
-                      to={`/dashboard/edit-order/${product._id}`}
+                      to={`/dashboard/edit-order/${order._id}`}
                       className="cursor-pointer hover:text-blue-800"
                     >
-                      <FaEdit />
+                      <FaEye />
                     </Link>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <FaTrash className="text-red-500 cursor-pointer" />
                   </Table.Cell>
                 </Table.Row>
               ))}

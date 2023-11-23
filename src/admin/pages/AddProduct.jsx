@@ -1,15 +1,18 @@
-import useAxios from '../../hooks/useAxios';
 import swal from 'sweetalert';
 import axios from 'axios';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import useAuth from '../../hooks/useAuth';
 const VITE_IMAGE_HOSTING_KEY = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${VITE_IMAGE_HOSTING_KEY}`;
 
 const AddProduct = () => {
-  const axiosSecure = useAxios();
+  const axiosPublic = useAxiosPublic();
+  const { loading, setLoading } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
     const formData = new FormData(e.target);
     const featuredImage = formData.get('featured_image');
     const galleryImage = formData.get('gallery_image');
@@ -28,7 +31,6 @@ const AddProduct = () => {
           },
         }
       );
-      // console.log('Featured Image URL:', featuredImageRes.data);
 
       // Upload gallery image
       const galleryImageFormData = new FormData();
@@ -43,32 +45,37 @@ const AddProduct = () => {
           },
         }
       );
-      // console.log('Gallery Image URL:', galleryImageRes.data);
 
-      // Now you can use the image URLs or other data as needed
-
-      // Rest of your code to handle other form fields and send the product data to your server
       const title = formData.get('title');
       const category = formData.get('category');
-      const regular_price = parseFloat(formData.get('regular_price'));
-      const sale_price = parseFloat(formData.get('sale_price'));
+      const rprice = parseFloat(formData.get('rprice'));
+      const sprice = parseFloat(formData.get('sprice'));
       const desc = formData.get('desc');
+      const sizeCheckboxes = Array.from(
+        e.target.querySelectorAll('input[name^="size"]:checked')
+      ).map((checkbox) => checkbox.value);
+      const colorCheckboxes = Array.from(
+        e.target.querySelectorAll('input[name^="color"]:checked')
+      ).map((checkbox) => checkbox.value);
 
       const productData = {
         title,
         category,
-        regular_price,
-        sale_price,
+        rprice: rprice,
+        sprice: sprice,
         desc,
         featured_image: featuredImageRes.data.data.display_url,
         gallery_image: galleryImageRes.data.data.display_url,
+        size: sizeCheckboxes,
+        color: colorCheckboxes,
       };
-      console.log(productData);
-      // Send product data to your server
-      axiosSecure
-        .post('/v1/addproduct', productData)
+
+      // Send product data to the server
+      axiosPublic
+        .post('/api/v1/addproduct', productData)
         .then((response) => {
           if (response.data.insertedId) {
+            setLoading(false);
             swal(
               'Congratulation!',
               'You successfully added a product!',
@@ -77,9 +84,11 @@ const AddProduct = () => {
           }
         })
         .catch((error) => {
+          setLoading(false);
           console.log('axios post error', error);
         });
     } catch (error) {
+      setLoading(false);
       console.error('Error uploading image:', error);
     }
   };
@@ -161,7 +170,7 @@ const AddProduct = () => {
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    name="xs"
+                    name="size[]"
                     className="input-checkbox mr-1"
                     value="xs"
                   />
@@ -170,7 +179,7 @@ const AddProduct = () => {
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    name="sm"
+                    name="size[]"
                     className="input-checkbox mr-1"
                     value="sm"
                   />
@@ -179,7 +188,7 @@ const AddProduct = () => {
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    name="m"
+                    name="size[]"
                     className="input-checkbox mr-1"
                     value="m"
                   />
@@ -188,7 +197,7 @@ const AddProduct = () => {
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    name="l"
+                    name="size[]"
                     className="input-checkbox mr-1"
                     value="l"
                   />
@@ -197,7 +206,7 @@ const AddProduct = () => {
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    name="xl"
+                    name="size[]"
                     className="input-checkbox mr-1"
                     value="xl"
                   />
@@ -214,7 +223,7 @@ const AddProduct = () => {
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    name="black"
+                    name="color[]"
                     className="input-checkbox mr-1"
                     value="black"
                   />
@@ -223,7 +232,7 @@ const AddProduct = () => {
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    name="red"
+                    name="color[]"
                     className="input-checkbox mr-1"
                     value="red"
                   />
@@ -232,7 +241,7 @@ const AddProduct = () => {
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    name="white"
+                    name="color[]"
                     className="input-checkbox mr-1"
                     value="white"
                   />
@@ -241,7 +250,7 @@ const AddProduct = () => {
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    name="green"
+                    name="color[]"
                     className="input-checkbox mr-1"
                     value="green"
                   />
@@ -250,7 +259,7 @@ const AddProduct = () => {
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    name="blue"
+                    name="color[]"
                     className="input-checkbox mr-1"
                     value="blue"
                   />
@@ -259,7 +268,7 @@ const AddProduct = () => {
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    name="mix"
+                    name="color[]"
                     className="input-checkbox mr-1"
                     value="mix"
                   />
@@ -308,8 +317,11 @@ const AddProduct = () => {
           </div>
           <div className="mt-12">
             <button
-              className="bg-black text-white font-base uppercase font-bold py-3 px-12 hover:translate-y-2 duration-500 rounded"
+              className={`bg-black text-white font-base uppercase font-bold py-3 px-12 hover:translate-y-2 duration-500 rounded cursor-pointer ${
+                loading && 'cursor-not-allowed'
+              }`}
               type="submit"
+              disabled={loading}
             >
               Add New Product
             </button>

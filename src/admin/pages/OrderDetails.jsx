@@ -1,15 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
-import useAxios from '../../hooks/useAxios';
 import Order from '../components/Order';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const OrderDetails = () => {
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure()
   const { isLoading, data } = useQuery({
     queryKey: ['product'],
     queryFn: () =>
       axiosSecure
-        .get('/v1/allproducts')
+        .get('/api/v1/allorders')
         .then((res) => {
+          console.log(res.data)
           return res.data;
         })
         .catch((error) => {
