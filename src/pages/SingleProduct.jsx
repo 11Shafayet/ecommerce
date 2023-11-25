@@ -34,7 +34,7 @@ const SingleProduct = () => {
   };
 
   return (
-    <div className="my-12">
+    <div className="pb-12 pt-28 md:pb-20 lg:pb-28 lg:pt-36">
       <div className="container mx-auto px-4">
         <div className="grid gap-4 md:gap-10 md:grid-cols-2">
           {/* images */}

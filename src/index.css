@@ -23,10 +23,17 @@ body {
   --aw_primary_color: #fff;
   --aw_secondary_color: #000;
   --aw_theme_color: #f5c000;
+  --aw_accent_color: rgb(0, 25, 30);
   --aw_primary_font: 'Playfair Display', serif;
   --aw_secondary_font: 'Poppins', serif;
 }
 
+.primary-color {
+  color: var(--aw_primary_color) !important;
+}
+.secondary-color {
+  color: var(--aw_secondary_color) !important;
+}
 .theme-color {
   color: var(--aw_theme_color) !important;
 }

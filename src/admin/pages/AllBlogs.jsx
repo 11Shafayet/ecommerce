@@ -58,7 +58,7 @@ const AllBlog = () => {
             <GridLoader color="#36d7b7" size={50} />
           </div>
         ) : (
-          <Table striped>
+          <Table striped className="relative">
             <Table.Head>
               <Table.HeadCell className="text-start">Thumbnail</Table.HeadCell>
               <Table.HeadCell className="text-start">Title</Table.HeadCell>

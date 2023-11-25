@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Table } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
@@ -15,7 +16,7 @@ const Order = ({ isLoading, data, title }) => {
             <GridLoader color="#36d7b7" size={50} />
           </div>
         ) : (
-          <Table striped>
+          <Table striped className="relative">
             <Table.Head>
               <Table.HeadCell className="text-start">Status</Table.HeadCell>
               <Table.HeadCell className="text-start">Title</Table.HeadCell>
@@ -65,6 +66,12 @@ const Order = ({ isLoading, data, title }) => {
       </div>
     </div>
   );
+};
+
+Order.propTypes = {
+  isLoading: PropTypes.bool,
+  data: PropTypes.array,
+  title: PropTypes.string,
 };
 
 export default Order;

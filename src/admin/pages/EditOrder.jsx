@@ -112,7 +112,7 @@ const EditOrder = () => {
               <span className="text-lg font-medium"> {bkashTrnID}</span>
             </h5>
             <div className="mt-6 overflow-auto">
-              <Table striped>
+              <Table striped className="relative">
                 <Table.Head>
                   <Table.HeadCell className="text-start">
                     Product

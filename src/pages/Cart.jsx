@@ -37,7 +37,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="my-12">
+    <div className="pb-12 pt-28 md:pb-20 lg:pb-28 lg:pt-36">
       <div className="container mx-auto px-4">
         <h2 className="text-center font-bold text-3xl md:text-5xl mb-12">
           {language === 'en' ? 'Your Cart' : 'আপনার কার্ট'}
@@ -47,7 +47,7 @@ const Cart = () => {
           <div className="col-span-1 lg:col-span-3">
             <div className="black-shadow rounded-lg py-12 px-4 overflow-x-auto ">
               {products.length > 0 ? (
-                <Table striped>
+                <Table striped className="relative">
                   <Table.Head>
                     <Table.HeadCell className="text-start">
                       Thumbnail

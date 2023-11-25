@@ -47,7 +47,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="bg-white shadow w-full text-4xl relative py-3 font-secondary">
+    <div className="bg-white shadow w-full text-4xl py-3 font-secondary fixed top-0 z-[11111]">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-3">
           {/* nav */}

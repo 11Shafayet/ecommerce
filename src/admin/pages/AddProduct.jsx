@@ -297,23 +297,14 @@ const AddProduct = () => {
             <label htmlFor="featured_image" className="form-label">
               Featured Image
             </label>
-            <input
-              type="file"
-              name="featured_image"
-              accept="image/png, image/gif, image/jpeg"
-            />
+            <input type="file" name="featured_image" accept="image/*" />
           </div>
           {/* gallery image*/}
           <div className="flex flex-col gap-4 justify-between mt-6">
             <label htmlFor="gallery_image" className="form-label">
               Gallery Image
             </label>
-            <input
-              type="file"
-              name="gallery_image"
-              accept="image/png, image/gif, image/jpeg"
-              multiple
-            />
+            <input type="file" name="gallery_image" accept="image/*" multiple />
           </div>
           <div className="mt-12">
             <button

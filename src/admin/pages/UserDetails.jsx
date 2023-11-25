@@ -8,7 +8,7 @@ const UserDetails = () => {
         <h2 className="text-center font-bold text-3xl md:text-5xl mb-12">
           User Details
         </h2>
-        <Table striped className="font-secondary">
+        <Table striped className="font-secondary relative">
           <Table.Head>
             <Table.HeadCell className="text-start">Role</Table.HeadCell>
             <Table.HeadCell className="text-start">Email</Table.HeadCell>

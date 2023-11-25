@@ -14,8 +14,8 @@ const Home = () => {
       <PopularProdcuts />
       <SubscribeSection />
       <WhyChooseUs />
-      <Testimonial />
-      <BlogSection />
+      {/* <Testimonial />
+      <BlogSection /> */}
     </>
   );
 };

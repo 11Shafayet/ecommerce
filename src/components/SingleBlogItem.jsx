@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
@@ -27,6 +28,10 @@ const SingleBlogItem = ({ item }) => {
       </div>
     </div>
   );
+};
+
+SingleBlogItem.propTypes = {
+  item: PropTypes.object,
 };
 
 export default SingleBlogItem;

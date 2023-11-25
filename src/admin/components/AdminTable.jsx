@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useQuery } from '@tanstack/react-query';
 import swal from 'sweetalert';
-import { GridLoader } from 'react-spinners';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Loader from '../../components/Loader';
 
@@ -58,7 +57,7 @@ const AdminTable = () => {
         {isLoading ? (
           <Loader />
         ) : (
-          <Table striped>
+          <Table striped className="relative">
             <Table.Head>
               <Table.HeadCell className="text-start">Thumbnail</Table.HeadCell>
               <Table.HeadCell className="text-start">Title</Table.HeadCell>
